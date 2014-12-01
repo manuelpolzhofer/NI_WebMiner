@@ -6,11 +6,15 @@ public class Website {
 	
 	String url;
 	ArrayList<String> links;
+	String text;
+	String title;
 	
-	public Website(String url,ArrayList<String> links)
+	public Website(String url,String text, String title, ArrayList<String> links)
 	{
 		this.url = url;
 		this.links = links;
+		this.text = text;
+		this.title = title;
 		
 	}
 	
@@ -20,9 +24,20 @@ public class Website {
 	}
 	
 	
+	public String getTitle()
+	{
+		return this.title;
+	}
+	
+	
 	public ArrayList<String> getLinks()
 	{
 		return this.links;
+	}
+	
+	public String getText()
+	{
+		return this.text;
 	}
 	
 	public String toString()

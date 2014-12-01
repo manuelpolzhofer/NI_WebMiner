@@ -12,12 +12,19 @@ import java.util.HashMap;
 public class NICrawler {
 	
 	
-	HashMap<String,Website> visitedWebsites;
-	ArrayList<String> todoListForCrawler;
+	private HashMap<String,Website> visitedWebsites;
+	private ArrayList<String> todoListForCrawler;
+	
+	
+
 	
 	public NICrawler(){
-
-		
+	
+	}
+	
+	public HashMap<String,Website> getVisitedWebsites()
+	{
+		return this.visitedWebsites;
 		
 	}
 	
@@ -57,6 +64,7 @@ public class NICrawler {
 			if(website != null)
 			{
 			System.out.println("visited: "+website.getUrl());
+			//System.out.println(""+website.text);
 		
 			
 			visitedWebsites.put(website.getUrl(), website);

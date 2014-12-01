@@ -16,50 +16,27 @@ import org.jsoup.select.Elements;
 public class WebsiteParser {
 	
 	
-	//private static final String USER_AGENT = null;
+	   Document actualWebsite;
 
 	public WebsiteParser()
 	{
 		
 	}
 	
+	private void connectToWebsite(String url)throws IOException
+	{
+	    actualWebsite = Jsoup.connect(url).get();
+	}
 	
-	/*
-	 * TODO: byHandMethod 
-	 * 
-	 * private String sendGetRequest(String url) throws IOException {
-		 
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
- 
-		// optional default is GET
-		con.setRequestMethod("GET");
- 
-		//add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
- 
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
- 
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
- 
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
- 
-		//print result
-		return response.toString();
-	}*/
 	
-	  public  ArrayList<String>extractLinks(String url) throws IOException {
-		    final ArrayList<String> result = new ArrayList<String>();
-		    Document doc = Jsoup.connect(url).get();
-		    Elements links = doc.select("a[href]");
+	  public  ArrayList<String>extractLinks(String url){
+		    
+		    ArrayList<String> result = new ArrayList<String>();
+		
+		    
+		  
+		    
+		    Elements links = actualWebsite.select("a[href]");
 		    for (Element link : links) {
 		      result.add(link.attr("abs:href"));
 		    }
@@ -70,15 +47,23 @@ public class WebsiteParser {
 	
 	public Website parseWebsite(String url)
 	{
-		ArrayList<String> links = null;
-		try {
-			links = this.extractLinks(url);
+		
+		try 
+		{
+			connectToWebsite(url);
+	
 		} catch (Exception e) {
 			
 			return null; //broken url
 		}
+		
+		ArrayList<String> links = null;
+		links = this.extractLinks(url);
+		String text = actualWebsite.body().text();
+	    String title = actualWebsite.title();
 
-		return new Website(url,links);
+		Website website = new Website(url,text,title,links);
+		return website;
 		
 	}
 	
