@@ -23,7 +23,6 @@ public class WebsiteWriter {
 	{
 	
 		for (HashMap.Entry<String, Website> entry : websiteList.entrySet()) {
-		    String key = entry.getKey();
 		    Website website = entry.getValue();
 		    this.writeWebsite(website);
 		}

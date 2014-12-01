@@ -1,13 +1,46 @@
 package crawler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Website {
+public class Website implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String url;
 	ArrayList<String> links;
 	String text;
 	String title;
+	
+    public double pageRankOld = 0;
+    public double pageRankNew = 0;
+    
+    public int numberOfOutgoingLinks() {
+        return this.links.size();
+        
+    }
+    public boolean isLinkedWithPage(Website website) {
+        String vertexUrl = website.getUrl();
+          for ( String weburl : this.links )
+          {
+              if(vertexUrl.equals(weburl))
+              {
+                  return true;
+              }
+          }
+        return false;
+    }
+    public boolean hasNoOutgoingLinks() {
+        if(this.links.size() == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    
 	
 	public Website(String url,String text, String title, ArrayList<String> links)
 	{
