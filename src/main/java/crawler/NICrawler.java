@@ -1,0 +1,81 @@
+/*
+ * Author Manuel Polzhofer
+ * 
+ * 
+ */
+
+package crawler;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class NICrawler {
+	
+	
+	HashMap<String,Website> visitedWebsites;
+	ArrayList<String> todoListForCrawler;
+	
+	public NICrawler(){
+
+		
+		
+	}
+	
+	private void fillCrawlerTODOList(Website website)
+	{
+		String acutalLink = null;
+		for(int i = 0;i<website.getLinks().size();i++)
+		{
+			acutalLink = website.getLinks().get(i);
+			if(visitedWebsites.containsKey(acutalLink) == false)
+			{
+				todoListForCrawler.add(acutalLink);
+			}
+			
+		}
+		
+	}
+	
+	
+	public void startCrawling(String startUrl,int maxNumberOfWebsites){
+		
+		visitedWebsites = new HashMap<String,Website>();
+		todoListForCrawler = new ArrayList<String>();
+		Website website = null;
+		WebsiteParser websiteParser = new WebsiteParser();
+
+		todoListForCrawler.add(startUrl);
+		
+		int websiteCounter = 0;
+		
+
+		while(todoListForCrawler.size() > 0 && websiteCounter < maxNumberOfWebsites ){
+			
+			website = websiteParser.parseWebsite(this.todoListForCrawler.get(0));
+			this.todoListForCrawler.remove(0);
+			
+			if(website != null)
+			{
+			System.out.println("visited: "+website.getUrl());
+		
+			
+			visitedWebsites.put(website.getUrl(), website);
+			fillCrawlerTODOList(website); //will add all links which are not visited
+			}
+			websiteCounter++;
+		
+			
+		}
+		System.out.println("Crawler Stopped - Visited Websites " +websiteCounter + " found Links which are not visted " + todoListForCrawler.size());
+		
+		
+		
+		
+		
+	}
+	
+  
+	
+	
+
+}
