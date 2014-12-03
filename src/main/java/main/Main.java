@@ -64,6 +64,10 @@ public class Main {
 		Document d = new Document(null,null);		
 		docList = d.processAllDocuments(dir);
 		
+		
+		
+		
+		
     	
     
     	
